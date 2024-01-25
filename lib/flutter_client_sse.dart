@@ -40,10 +40,14 @@ class SSEClient {
         if (method == SSERequestType.GET) {
           _client.getUrl(Uri.parse(url)).then((request) {
             handleRequest(request, header, body, streamController);
+          }, onError: (e, st) {
+            streamController.addError(e, st);
           });
         } else {
           _client.postUrl(Uri.parse(url)).then((request) {
             handleRequest(request, header, body, streamController);
+          }, onError: (e, st) {
+            streamController.addError(e, st);
           });
         }
       } catch (e, st) {
